@@ -1,0 +1,19 @@
+# binario do loader (regeneravel via build.sh) e libs/dados BYO
+scourgebringer
+scourgebringer-nextos
+*.so
+assets/
+libs/
+work/
+build/
+dist/
+*.zip
+*.zip.sha256
+*.apk
+*.obb
+*.dll
+*.blob
+*.log
+!screenshots/
+bin/
+obj/

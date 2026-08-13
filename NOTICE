@@ -1,0 +1,33 @@
+nextos_ports_android
+Copyright 2026 felc18-blip
+
+Este produto inclui código derivado de:
+  - syberia_arm64  (https://github.com/mtojek/syberia_arm64)
+  - lswtcs_arm64   (https://github.com/mtojek/lswtcs_arm64)
+  Copyright mtojek, licenciado sob Apache License 2.0.
+
+Mudanças: o núcleo (so_util, egl_shim, opensles_shim, util, error) foi
+extraído como framework reutilizável; adicionada ferramenta de scaffolding
+(tools/new-port.sh) e suporte ao toolchain NextOS / GPUs Mali.
+
+O port Crazy Taxi Classic (ports/crazytaxi/) usa o loader de:
+  - crazytaxi-aarch64  (https://github.com/initdream/crazytaxi-aarch64)
+  Copyright initdream — que construiu o loader EM CIMA deste framework.
+  Nós (felc18-blip) adaptamos esse loader para o Mali-450 (Utgard, fbdev):
+  recompilação no toolchain NextOS Amlogic-old, mapeamento teclado->keycode
+  Android para uso com gptokeyb, e ajustes de áudio (PulseAudio).
+  Apenas o CÓDIGO/loader é versionado — nenhum dado de jogo (copyright Sega).
+
+O port GTA IV total-conversion (ports/gtaiv/) reutiliza o driver do
+ports/gtasa/ (mesmo libGTASA.so) e adiciona um interpretador SCM/CLEO
+próprio (src/cleo.c) baseado no estudo de:
+  - cleolibrary/CLEO-ANDROID  (https://github.com/cleolibrary/CLEO-ANDROID)
+    Copyright cleolibrary, licenciado sob BSD-3-Clause.
+  - cleolibrary/CLEO4         (https://github.com/cleolibrary/CLEO4)
+    Copyright cleolibrary.
+  Nenhum código JNI-dependente desses projetos foi copiado — apenas a
+  semântica dos opcodes SCM e CLEO Android (estudada pra re-implementação
+  nativa no nosso loader). A tabela de opcodes em src/opcodes.h foi
+  gerada do SASCM-Mobile.ini do Sanny Builder.
+  Os scripts (.csa/.csi/.fxt) e dados do mod em si (KangReceh / HAF) não
+  são versionados — apenas o código do nosso loader.
