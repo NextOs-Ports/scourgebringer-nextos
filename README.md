@@ -11,6 +11,13 @@ ScourgeBringer's APK, art, music, Android libraries or any other proprietary
 game data. / Este projeto é um loader de compatibilidade independente e não
 distribui o APK nem os dados proprietários do jogo.
 
+The Git tree is source-only: shared framework/NXExtract code, generated
+launchers and compiled binaries are materialized only while packaging. See the
+[source allowlist](SOURCE-ALLOWLIST.md). / A árvore Git contém somente fontes:
+framework/NXExtract compartilhados, launchers gerados e binários compilados só
+são materializados durante o empacotamento. Consulte a
+[allowlist de fontes](SOURCE-ALLOWLIST.md).
+
 **Community test / Teste comunitário:**
 [download `v1.0.0-test.8`](https://github.com/NextOs-Ports/scourgebringer-nextos/releases/tag/v1.0.0-test.8).
 The Mali-450 baseline and the menu/gameplay correction are physically proven;
@@ -247,11 +254,15 @@ pinned offline Debian Buster container. It uses the NextOS sysroot for headers
 only and produces
 `./scourgebringer-nextos`. The checked
 artifact requires at most `GLIBC_2.17`, below the public `GLIBC_2.30` ceiling.
-Copy the development tree directly to the layout above and launch through the
-generated PortMaster script. It displays NXExtract when needed, runs the game in
-the foreground and hands control back to EmulationStation on exit. Community
-test 1.0.0-test.8 is distributed as a BYO-data ZIP: it contains no APK, game
-assets, saves or extracted Android libraries.
+Use the published ZIP or create it with `package/build-package.sh`. The package
+recipe takes `NEXTOS_FRAMEWORK_ROOT` and `NXEXTRACT_SOURCE_ROOT` from external,
+pinned source trees, verifies every shared input by SHA-256, generates the
+launcher in a temporary source mirror and reopens the final ZIP for inspection.
+No shared framework/runtime or compiled ELF is committed to this repository.
+The launcher displays NXExtract when needed, runs the game in the foreground
+and hands control back to EmulationStation on exit. Community test
+1.0.0-test.8 is distributed as a BYO-data ZIP: it contains no APK, game assets,
+saves or extracted Android libraries.
 
 ### Language and compatible data
 
@@ -480,12 +491,16 @@ baixa somente esse commit exato do repositório canônico e confere seu ID. Depo
 valida a versão de cada componente fixado e roda no container Debian Buster
 offline. Ele usa o sysroot NextOS somente para headers e gera
 `./scourgebringer-nextos`. O artefato conferido exige
-no máximo `GLIBC_2.17`, abaixo do teto público `GLIBC_2.30`. Copie a árvore de
-desenvolvimento diretamente para o layout acima e abra pelo launcher PortMaster
-gerado. Ele mostra o NXExtract quando necessário, executa em foreground e
-devolve o EmulationStation ao sair. O teste comunitário 1.0.0-test.8 é um ZIP
-BYO-data: ele não contém APK, assets do jogo, saves nem bibliotecas Android já
-extraídas.
+no máximo `GLIBC_2.17`, abaixo do teto público `GLIBC_2.30`. Use o ZIP publicado
+ou gere-o com `package/build-package.sh`. A receita recebe
+`NEXTOS_FRAMEWORK_ROOT` e `NXEXTRACT_SOURCE_ROOT` de árvores externas e fixadas,
+confere cada entrada compartilhada por SHA-256, gera o launcher dentro do
+espelho temporário e reabre o ZIP final para auditoria. Nenhum
+framework/runtime compartilhado nem ELF compilado é commitado neste
+repositório. O launcher mostra o NXExtract quando necessário, executa em
+foreground e devolve o EmulationStation ao sair. O teste comunitário
+1.0.0-test.8 é um ZIP BYO-data: ele não contém APK, assets do jogo, saves nem
+bibliotecas Android já extraídas.
 
 ### Idiomas e dados compatíveis
 

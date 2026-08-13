@@ -66,32 +66,28 @@ if [ "${SCOURGE_BUSTER_IN_CONTAINER:-0}" != "1" ]; then
   # is currently checked out in the shared repository.
   FRAMEWORK_SNAPSHOT=$(mktemp -d \
     "${TMPDIR:-/tmp}/scourge-framework-${FRAMEWORK_COMMIT}.XXXXXX")
-  git -C "$FRAMEWORK_GIT_ROOT" archive "$FRAMEWORK_COMMIT" framework |
+  git -C "$FRAMEWORK_GIT_ROOT" archive "$FRAMEWORK_COMMIT" \
+    framework \
+    suportando_outros_devices/extrator-universal/VERSION |
     tar -x -C "$FRAMEWORK_SNAPSHOT"
   FRAMEWORK_SOURCE=$FRAMEWORK_SNAPSHOT/framework
-  python3 -B - "$FRAMEWORK_PIN" "$FRAMEWORK_SOURCE" <<'PY'
+  NXEXTRACT_VERSION_FILE=$FRAMEWORK_SNAPSHOT/suportando_outros_devices/extrator-universal/VERSION
+  python3 -B - "$FRAMEWORK_PIN" "$FRAMEWORK_SOURCE" \
+    "$NXEXTRACT_VERSION_FILE" <<'PY'
 import json
 import pathlib
-import re
 import sys
 
 pin_path = pathlib.Path(sys.argv[1])
 framework = pathlib.Path(sys.argv[2])
+nxextract_version = pathlib.Path(sys.argv[3])
 pin = json.loads(pin_path.read_text(encoding="utf-8"))
 for component, expected in sorted(pin["components"].items()):
-    version_path = framework / component / "VERSION"
-    if component == "nxextract" and not version_path.is_file():
-        runtime_path = pin_path.parent / "nxextract" / "nxextract.py"
-        runtime_text = runtime_path.read_text(encoding="utf-8")
-        match = re.search(r'^NXEXTRACT_VERSION = "([^"]+)"$', runtime_text, re.M)
-        if not match:
-            raise SystemExit("bundled NXExtract version is unavailable")
-        actual = match.group(1)
-        if actual != expected:
-            raise SystemExit(
-                f"framework pin mismatch: {component} expected={expected} actual={actual}"
-            )
-        continue
+    version_path = (
+        nxextract_version
+        if component == "nxextract"
+        else framework / component / "VERSION"
+    )
     if not version_path.is_file():
         raise SystemExit(f"pinned framework component is missing: {component}")
     actual = version_path.read_text(encoding="utf-8").strip()
