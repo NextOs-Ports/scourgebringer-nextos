@@ -12,8 +12,14 @@ cleanup() {
 trap cleanup EXIT
 
 "$CC" -std=gnu11 -Wall -Wextra -Wno-unused-parameter -O2 \
-  "$PORT_DIR/tests/test_bionic_compat.c" \
-  "$PORT_DIR/src/bionic_shims.c" \
+  -c "$PORT_DIR/tests/test_bionic_compat.c" \
+  -o "$TEST_DIR/test_bionic_compat.o"
+"$CC" -std=gnu11 -Wall -Wextra -Wno-unused-parameter -O2 \
+  -D_FORTIFY_SOURCE=0 \
+  -D__fread_chk=sb_guest_fread_chk \
+  -c "$PORT_DIR/src/bionic_shims.c" \
+  -o "$TEST_DIR/bionic_shims.o"
+"$CC" "$TEST_DIR/test_bionic_compat.o" "$TEST_DIR/bionic_shims.o" \
   -o "$TEST_DIR/test_bionic_compat"
 "$TEST_DIR/test_bionic_compat"
 
