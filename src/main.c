@@ -36,6 +36,7 @@
 #include "sdv_egl_bridge.h"
 #include "title_menu_guard.h"
 #include "nx_port_framework.h"
+#include "nxgl_frame_proof_adapter.h"
 
 #define MONO_SO    "libmonosgen-2.0.so"
 #define XAMARIN_SO "libxamarin-app.so"
@@ -1780,6 +1781,9 @@ static void scourgebringer_runtime_defaults(void)
 
 int main(int argc, char **argv)
 {
+  /* Emitted before anything can fail: the launch context is what a reader
+   * needs to know whether a startup failure says anything about the port. */
+  nxgl_frame_proof_launch_receipt();
     scourgebringer_runtime_defaults();
     return nx_port_framework_run("scourgebringer", argc, argv,
                                  scourgebringer_runtime_main);

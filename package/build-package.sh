@@ -59,9 +59,9 @@ require_pinned_file() {
 
 require_pinned_file \
   "$FRAMEWORK_ROOT/nxbootstrap/VERSION" \
-  4d0a1fd8ea16a8dcca2637e31bc1fdee7d68961772593dd20545b54d8a1ef487 \
+  e94a7f87af28a51ae948939b0fc6f3d7b9853add0d06a4ffb6df7c67c68ffcc5 \
   'NXBootstrap VERSION'
-[[ $(<"$FRAMEWORK_ROOT/nxbootstrap/VERSION") == 0.6.15 ]] ||
+[[ $(<"$FRAMEWORK_ROOT/nxbootstrap/VERSION") == 0.6.16 ]] ||
   fail 'NXBootstrap version drifted'
 require_pinned_file \
   "$NXGENERATOR" \
@@ -69,17 +69,17 @@ require_pinned_file \
   'NXBootstrap generator'
 require_pinned_file \
   "$NXBOOTSTRAP_TEMPLATE" \
-  71e2e61d473267a93626af729d51d374e294efac4ff1d55751ec9d8c2b05e88e \
+  235c4172b3b4ba829056ee951d8602712e506765b98b85c802d12675f68bda07 \
   'NXBootstrap launcher template'
 require_pinned_file \
   "$FRAMEWORK_ROOT/nxrelease/VERSION" \
-  26e6ebd4b069ddb03df79ec9a299ee4a39c60bf8d34a2b6a3ff059d4f2e21b88 \
+  83d303e6b26d4650921ff1388729c76bb1397419877ffcf30cb403e2a5501421 \
   'NXRelease VERSION'
-[[ $(<"$FRAMEWORK_ROOT/nxrelease/VERSION") == 0.2.14 ]] ||
+[[ $(<"$FRAMEWORK_ROOT/nxrelease/VERSION") == 0.2.15 ]] ||
   fail 'NXRelease version drifted'
 require_pinned_file \
   "$NXRELEASE" \
-  694258c94a5118bac70bea44a0505a380268450875a49836d130812781dee508 \
+  5294ef2aafaffa892d59ee855328524a132429b20de4932aaf4ce50e76307bd1 \
   'NXRelease tool'
 require_pinned_file \
   "$NXEXTRACT_ROOT/VERSION" \
@@ -111,7 +111,7 @@ cmp -s "$NXEXTRACT_ROOT/LICENSE" "$PORT_DIR/licenses/NXExtract-MIT.txt" ||
   fail 'tracked NXExtract licence notice drifted'
 require_pinned_file \
   "$MANIFEST" \
-  e53b763edabedccaa84fc574a7c21ccb45e47929938d5d6c8a31fa1612558748 \
+  a68c22f802766bedbc08b60e8cf7253cac12de3990e76c3b05e9639672c03b56 \
   'source release manifest'
 [[ ! -e $DESTINATION && ! -L $DESTINATION ]] ||
   fail "destination already exists: $DESTINATION"
@@ -146,7 +146,7 @@ if source.count(needle) != 1:
     raise SystemExit("package README mapping is missing or ambiguous")
 sealed = source.replace(needle, '"source": "README.md"')
 digest = hashlib.sha256(sealed.encode("utf-8")).hexdigest()
-expected = "5767362bc98fae0e66797eb8f781bee8d493051a011f08c6d70ab7ea0b0b7986"
+expected = "97a2ceece000355d8c25d55c15a989f74cf1d59cf087db4db2068a7ff84cf0b5"
 if digest != expected:
     raise SystemExit(f"sealed manifest drifted: {digest}")
 pathlib.Path(sys.argv[2]).write_text(sealed, encoding="utf-8")
@@ -161,7 +161,7 @@ install -m 0755 -- "$WORK_ROOT/generated/ScourgeBringer.sh" \
   "$SOURCE_ROOT/ScourgeBringer.sh"
 require_pinned_file \
   "$SOURCE_ROOT/ScourgeBringer.sh" \
-  819dc04d69a32baaba4141ce151c447a50e355a2949888053bacf68d30271d45 \
+  2756a86a915723a01ad1d9fdc6ad6cdefbb5e386050e42ae241784fd1a2acb61 \
   'generated launcher'
 
 for runtime_file in nxextract.py run-extractor.sh nxextract-runtime-env.sh; do
@@ -178,7 +178,7 @@ if [[ ${SCOURGE_SKIP_BUILD:-0} != 1 ]]; then
 fi
 require_pinned_file \
   "$PORT_DIR/scourgebringer-nextos" \
-  a22c63509c327149a75ae172a91c2434e511d8b5f3e67dcc301ebed59b2be18c \
+  025b8ae803f167753ce59b856e8585036b4f805ac76b42e9d8f4ceaa7d30fc90 \
   'project executable'
 
 python3 -B - "$BUNDLE_MANIFEST" "$PORT_DIR" "$SOURCE_ROOT" <<'PY'

@@ -214,6 +214,7 @@ PORT_SOURCES=(
   src/util.c
   src/error.c
   src/nx_port_framework.c
+  src/nxgl_frame_proof_adapter.c
 )
 for source in "${PORT_SOURCES[@]}"; do
   compile_source scourge "$source"

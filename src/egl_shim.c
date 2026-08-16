@@ -24,6 +24,7 @@
 #include "egl_shim.h"
 #include "jni_shim.h"
 #include "util.h"
+#include "nxgl_frame_proof_adapter.h"
 
 /* Resolucao DINAMICA (qualquer device): desktop mode do SDL com fallback
  * 1280x720. Exportada p/ imports.c (ANativeWindow_getWidth/Height — o que o
@@ -1064,6 +1065,22 @@ static void lcs_loading_present_now(void) {
 
   presenting = 1;
   lcs_loading_render();
+  /* Sampled immediately before the present, which is the only place that sees
+   * exactly what reaches the panel. Several frames, because a title card can
+   * legitimately be black at the first reading. */
+  {
+    static unsigned long frame;
+    frame++;
+    if (frame == 300 || frame == 600 || frame == 900) {
+      nxgl_frame_proof_sample(0, 0);
+      nxgl_frame_proof_publish();
+    }
+    /* Published here as well as at shutdown: an automated run ends with
+     * SIGKILL, and a verdict that only appears on a clean exit is missing from
+     * exactly the runs that need it. */
+    if (frame == 900)
+      nxgl_frame_proof_publish();
+  }
   SDL_GL_SwapWindow(egl_window);
   presenting = 0;
 }

@@ -11,7 +11,7 @@
     ],
     "launcher_contract": {
       "generator": "nxbootstrap",
-      "version": "0.6.15",
+      "version": "0.6.16",
       "config_path": "scourgebringer/nxport.json",
       "config_sha256": "2e0998e1bc950de21f2bc81836777ddc73476ea3f03d6afe403dc0bc85da7bda"
     },
@@ -103,7 +103,7 @@
       "target": "ScourgeBringer.sh",
       "kind": "launcher",
       "mode": "0755",
-      "sha256": "819dc04d69a32baaba4141ce151c447a50e355a2949888053bacf68d30271d45"
+      "sha256": "2756a86a915723a01ad1d9fdc6ad6cdefbb5e386050e42ae241784fd1a2acb61"
     },
     {
       "source": "nxport.json",
@@ -120,7 +120,7 @@
       "architecture": "aarch64",
       "build_profile": "universal-low-glibc",
       "provenance": "build.sh; framework snapshot extracted from immutable commit 583ec1e977eb377669414fe949969bd784ced730 with all component versions checked against FRAMEWORK-PIN.json; pinned offline Debian Buster image sha256:036c7910ea53bc78cc213452afa92fa83d55de1c51ae54f315af58b5a41a45cf; target sysroot used for headers only",
-      "sha256": "a22c63509c327149a75ae172a91c2434e511d8b5f3e67dcc301ebed59b2be18c",
+      "sha256": "025b8ae803f167753ce59b856e8585036b4f805ac76b42e9d8f4ceaa7d30fc90",
       "needed": [
         "libEGL.so.1",
         "libGLESv2.so.2",
