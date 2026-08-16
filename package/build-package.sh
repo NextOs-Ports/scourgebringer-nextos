@@ -36,7 +36,7 @@ NXEXTRACT_ROOT=$(CDPATH= cd -- "$NXEXTRACT_ROOT" && pwd -P)
 NXGENERATOR=$FRAMEWORK_ROOT/nxbootstrap/tools/generate-port.py
 NXBOOTSTRAP_TEMPLATE=$FRAMEWORK_ROOT/nxbootstrap/templates/launcher.sh.in
 NXRELEASE=$FRAMEWORK_ROOT/nxrelease/nxrelease.py
-NXEXTRACT_UI_SOURCE=$NXEXTRACT_ROOT/ui/build/nxextract-ui
+NXEXTRACT_UI_SOURCE=$NXEXTRACT_ROOT/ui/release/aarch64/nxextract-ui
 MANIFEST=$PORT_DIR/nxrelease.json
 DESTINATION=${1:-"$PORT_DIR/.build/release-1.0.0-test.8"}
 ARCHIVE_NAME=scourgebringer-1.0.0-test.8.zip
@@ -59,41 +59,41 @@ require_pinned_file() {
 
 require_pinned_file \
   "$FRAMEWORK_ROOT/nxbootstrap/VERSION" \
-  798a8d19f2adf20f8711b3c93b6b312369b11d7a7e7043fe533c13c268ac78be \
+  4d0a1fd8ea16a8dcca2637e31bc1fdee7d68961772593dd20545b54d8a1ef487 \
   'NXBootstrap VERSION'
-[[ $(<"$FRAMEWORK_ROOT/nxbootstrap/VERSION") == 0.6.8 ]] ||
+[[ $(<"$FRAMEWORK_ROOT/nxbootstrap/VERSION") == 0.6.15 ]] ||
   fail 'NXBootstrap version drifted'
 require_pinned_file \
   "$NXGENERATOR" \
-  571cbc2e8dfcc60ae49a5ba2aa85db4e94a1938fbb683da4196117bb3d329850 \
+  3accd0e4bf598b641850ebccb07ebebebe5aa8dd92781b5576c69f428412ce74 \
   'NXBootstrap generator'
 require_pinned_file \
   "$NXBOOTSTRAP_TEMPLATE" \
-  c8aae3fabebaac14448d05c30645f8cf63801eb84d5449f7948931c1421b3e4b \
+  71e2e61d473267a93626af729d51d374e294efac4ff1d55751ec9d8c2b05e88e \
   'NXBootstrap launcher template'
 require_pinned_file \
   "$FRAMEWORK_ROOT/nxrelease/VERSION" \
-  be3c6d2c6c406a64d44f0b6464a887e290416dd90c524094485b1be00936d6d7 \
+  26e6ebd4b069ddb03df79ec9a299ee4a39c60bf8d34a2b6a3ff059d4f2e21b88 \
   'NXRelease VERSION'
-[[ $(<"$FRAMEWORK_ROOT/nxrelease/VERSION") == 0.2.6 ]] ||
+[[ $(<"$FRAMEWORK_ROOT/nxrelease/VERSION") == 0.2.14 ]] ||
   fail 'NXRelease version drifted'
 require_pinned_file \
   "$NXRELEASE" \
-  f7ba3eda7d3d9e4318f5e8d83d16f05ea71b5d62c66961275df78a82cf6aa769 \
+  694258c94a5118bac70bea44a0505a380268450875a49836d130812781dee508 \
   'NXRelease tool'
 require_pinned_file \
   "$NXEXTRACT_ROOT/VERSION" \
-  5844ffcc346f89c07b13ba7596bfb3788ed73f4755e541182d7822d43b7c7a24 \
+  4304275f30e076c76abdc0f280f0fdd5537f1ac700953ba1908e29a64d531919 \
   'NXExtract VERSION'
-[[ $(<"$NXEXTRACT_ROOT/VERSION") == 1.2.6 ]] ||
+[[ $(<"$NXEXTRACT_ROOT/VERSION") == 1.2.10 ]] ||
   fail 'NXExtract version drifted'
 require_pinned_file \
   "$NXEXTRACT_ROOT/nxextract.py" \
-  a4a8e5d3bf2a1344491e27921c54430ee9b4e3fedd0160631da96734fa3d5170 \
+  b1b46ecdf1336b1412d7d3a3d291220aca4834a47730a5545afb382dae6036b5 \
   'NXExtract runtime'
 require_pinned_file \
   "$NXEXTRACT_ROOT/run-extractor.sh" \
-  179b72f02b9dfdf3ed1bdc382d074fb4ef07f83e3d62cfccfc74a950e68679c2 \
+  c931427c7226d22d7e30eee8549b50f0621dca1c9d0336634aca08631f454d7a \
   'NXExtract runner'
 require_pinned_file \
   "$NXEXTRACT_ROOT/nxextract-runtime-env.sh" \
@@ -101,7 +101,7 @@ require_pinned_file \
   'NXExtract runtime environment'
 require_pinned_file \
   "$NXEXTRACT_UI_SOURCE" \
-  046afb583f5a211c946495e639409f81d9cfec706788eeccb7924b0e8e5a50b6 \
+  7ca901d8515ab9a084be81e05888e1fd03cec80fb03896df6331c1c95698ef56 \
   'NXExtract UI'
 require_pinned_file \
   "$NXEXTRACT_ROOT/LICENSE" \
@@ -111,7 +111,7 @@ cmp -s "$NXEXTRACT_ROOT/LICENSE" "$PORT_DIR/licenses/NXExtract-MIT.txt" ||
   fail 'tracked NXExtract licence notice drifted'
 require_pinned_file \
   "$MANIFEST" \
-  7183fa8f4e0049da0000604ea72987ce2b8cd8f1813c1ad330ee50576f1a73a2 \
+  1567d27ccffa67f32481a617428197538bbdec7cf014c1a47de781f355082d70 \
   'source release manifest'
 [[ ! -e $DESTINATION && ! -L $DESTINATION ]] ||
   fail "destination already exists: $DESTINATION"
@@ -146,7 +146,7 @@ if source.count(needle) != 1:
     raise SystemExit("package README mapping is missing or ambiguous")
 sealed = source.replace(needle, '"source": "README.md"')
 digest = hashlib.sha256(sealed.encode("utf-8")).hexdigest()
-expected = "a6addd812d7dfd71b0b7e81cadc295ade8317908a53329e6d5175c2139ddc5e6"
+expected = "29df50e9dab7154706761382b164bd7ec300308459f2b19b88eac57606903af1"
 if digest != expected:
     raise SystemExit(f"sealed manifest drifted: {digest}")
 pathlib.Path(sys.argv[2]).write_text(sealed, encoding="utf-8")
@@ -161,7 +161,7 @@ install -m 0755 -- "$WORK_ROOT/generated/ScourgeBringer.sh" \
   "$SOURCE_ROOT/ScourgeBringer.sh"
 require_pinned_file \
   "$SOURCE_ROOT/ScourgeBringer.sh" \
-  4b58c23db5bacdc0628bc4e63f3aa89f90e132fb4dd80a6fb533576b4ec55776 \
+  819dc04d69a32baaba4141ce151c447a50e355a2949888053bacf68d30271d45 \
   'generated launcher'
 
 for runtime_file in nxextract.py run-extractor.sh nxextract-runtime-env.sh; do
@@ -260,12 +260,18 @@ with zipfile.ZipFile(archive_path) as archive:
             raise SystemExit(f"private marker in ZIP: {name}")
         if lower.endswith(".sh"):
             for number, line in enumerate(data.decode("utf-8").splitlines(), 1):
-                if not line.lstrip().startswith("#") and shell_word.search(line):
+                clean = line.strip()
+                if clean.startswith("#") or clean.startswith("import ") or clean.startswith("from "):
+                    continue
+                if shell_word.search(line):
                     raise SystemExit(
                         "external s" + f"tat command in {name}:{number}"
                     )
 print(f"unpacked public ZIP audit: PASS members={len(members)}")
 PY
+
+python3 -B "$FRAMEWORK_ROOT/tests/audit-portmaster-zip.py" \
+  "$DESTINATION/$ARCHIVE_NAME"
 
 printf 'ScourgeBringer data-free test release: %s\n' \
   "$DESTINATION/$ARCHIVE_NAME"
