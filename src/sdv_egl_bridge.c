@@ -9,6 +9,7 @@
 #include "sdv_egl_bridge.h"
 #include "aspect_fill.h"
 #include "present_fbo.h"
+#include "nxgl_frame_proof_adapter.h"
 #include "nx_port_framework.h"
 
 #include <dlfcn.h>
@@ -970,6 +971,17 @@ int sdv_egl_swap(void *surface)
         sb_present_fullsize_fbo(g_width, g_height);
         sdv_prepare_present();
         sb_present_aspect_fill(g_width, g_height);
+        /* Framework frame proof, after the aspect-fill blit and before the
+         * swap: this is the frame that reaches the panel. Three samples over
+         * the run; the first can still be a legitimately black title card. */
+        {
+            static unsigned long proof_frame;
+            proof_frame++;
+            if (proof_frame == 300 || proof_frame == 600 || proof_frame == 900) {
+                nxgl_frame_proof_sample(g_width, g_height);
+                nxgl_frame_proof_publish();
+            }
+        }
         sdv_draw_right_cursor();
         g_sdl.gl_swap_window(g_window);
         ++g_swap_count;

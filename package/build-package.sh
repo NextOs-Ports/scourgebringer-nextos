@@ -111,7 +111,7 @@ cmp -s "$NXEXTRACT_ROOT/LICENSE" "$PORT_DIR/licenses/NXExtract-MIT.txt" ||
   fail 'tracked NXExtract licence notice drifted'
 require_pinned_file \
   "$MANIFEST" \
-  a68c22f802766bedbc08b60e8cf7253cac12de3990e76c3b05e9639672c03b56 \
+  cc581623abd68f9f3849d6efb821cb8d6ee885a03dac97e85f043f427de82fb5 \
   'source release manifest'
 [[ ! -e $DESTINATION && ! -L $DESTINATION ]] ||
   fail "destination already exists: $DESTINATION"
@@ -146,7 +146,7 @@ if source.count(needle) != 1:
     raise SystemExit("package README mapping is missing or ambiguous")
 sealed = source.replace(needle, '"source": "README.md"')
 digest = hashlib.sha256(sealed.encode("utf-8")).hexdigest()
-expected = "97a2ceece000355d8c25d55c15a989f74cf1d59cf087db4db2068a7ff84cf0b5"
+expected = "5a91b6ec650d1f396d465105d8eb04d24bb713511a8f3e84b6ce7ec840400ff5"
 if digest != expected:
     raise SystemExit(f"sealed manifest drifted: {digest}")
 pathlib.Path(sys.argv[2]).write_text(sealed, encoding="utf-8")
@@ -178,7 +178,7 @@ if [[ ${SCOURGE_SKIP_BUILD:-0} != 1 ]]; then
 fi
 require_pinned_file \
   "$PORT_DIR/scourgebringer-nextos" \
-  025b8ae803f167753ce59b856e8585036b4f805ac76b42e9d8f4ceaa7d30fc90 \
+  8d085741b732da79d30fe299ae142eee8bdf28df259f73a822618d09b3fc8b31 \
   'project executable'
 
 python3 -B - "$BUNDLE_MANIFEST" "$PORT_DIR" "$SOURCE_ROOT" <<'PY'
