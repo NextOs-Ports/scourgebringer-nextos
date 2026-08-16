@@ -429,9 +429,17 @@ int sdv_egl_init(void)
         sdv_set_gl_attributes(ladder[rung].alpha, ladder[rung].depth,
                               ladder[rung].stencil);
         g_window = g_sdl.create_window(
-            "Stardew Valley", (int)SB_SDL_WINDOWPOS_CENTERED,
+            "ScourgeBringer", (int)SB_SDL_WINDOWPOS_CENTERED,
             (int)SB_SDL_WINDOWPOS_CENTERED, g_width, g_height,
             SB_SDL_WINDOW_OPENGL | SB_SDL_WINDOW_FULLSCREEN);
+        if (!g_window) {
+            setenv("SDL_VIDEO_EGL_DRIVER", "libEGL.so", 1);
+            setenv("SDL_VIDEO_GL_DRIVER", "libGLESv2.so", 1);
+            g_window = g_sdl.create_window(
+                "ScourgeBringer", (int)SB_SDL_WINDOWPOS_CENTERED,
+                (int)SB_SDL_WINDOWPOS_CENTERED, g_width, g_height,
+                SB_SDL_WINDOW_OPENGL | SB_SDL_WINDOW_FULLSCREEN);
+        }
         if (!g_window) {
             fprintf(stderr,
                     "[sdv-egl] rung %zu ES2 a%d d%d s%d: window failed: %s\n",

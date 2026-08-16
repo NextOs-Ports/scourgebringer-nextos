@@ -120,7 +120,7 @@
       "architecture": "aarch64",
       "build_profile": "universal-low-glibc",
       "provenance": "build.sh; framework snapshot extracted from immutable commit 583ec1e977eb377669414fe949969bd784ced730 with all component versions checked against FRAMEWORK-PIN.json; pinned offline Debian Buster image sha256:036c7910ea53bc78cc213452afa92fa83d55de1c51ae54f315af58b5a41a45cf; target sysroot used for headers only",
-      "sha256": "a245edea4cf83dd9f1dc0e9b808ddf6e9d15ecaee35433bba8bc78c2555c0273",
+      "sha256": "a22c63509c327149a75ae172a91c2434e511d8b5f3e67dcc301ebed59b2be18c",
       "needed": [
         "libEGL.so.1",
         "libGLESv2.so.2",

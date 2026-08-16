@@ -100,7 +100,13 @@ print(
     f"commit={pin['source_commit']} components={len(pin['components'])}"
 )
 PY
-  NEXTOS_ROOT=${NEXTOS_ROOT:-"$HOME/NextOS-Elite-Edition"}
+  if [ -d "/mnt/ARQUIVOS/NextOS-Elite-Edition" ]; then
+    NEXTOS_ROOT=/mnt/ARQUIVOS/NextOS-Elite-Edition
+  elif [ -d "$HOME/NextOS-Elite-Edition" ]; then
+    NEXTOS_ROOT=$HOME/NextOS-Elite-Edition
+  else
+    NEXTOS_ROOT=${NEXTOS_ROOT:-/mnt/ARQUIVOS/NextOS-Elite-Edition}
+  fi
   NEXTOS_TOOLCHAIN=$(
     find -H "$NEXTOS_ROOT" -maxdepth 2 -type d \
       -path '*/build.NextOS-Retro-Elite-Edition-Amlogic-old.aarch64-*/toolchain' \
